@@ -1,0 +1,17 @@
+﻿// 1.總銷售金額
+EVALUATE
+ROW("Total Sales",
+SUM(Sales[Sales fact]))
+
+// 2.總銷售計畫
+EVALUATE
+ROW("Total Plan",
+SUM(Sales[Sales plan]))
+
+// 3.銷售達成率
+EVALUATE
+ROUND((達成比數 IF(Sales[Sales fact]-Sales[Sales plan]>-1,"達成","失敗")/COUNTROWS(Sales[Sales fact]),2)*100 & "%"
+
+EVALUATE
+IF.EAGER(Sales[Country]="USA","達成","失敗")
+SWITCH(
