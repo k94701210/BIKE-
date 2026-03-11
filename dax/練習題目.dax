@@ -10,8 +10,16 @@ SUM(Sales[Sales plan]))
 
 // 3.銷售達成率
 EVALUATE
-ROUND((達成比數 IF(Sales[Sales fact]-Sales[Sales plan]>-1,"達成","失敗")/COUNTROWS(Sales[Sales fact]),2)*100 & "%"
+ROW("Sales Achievement %",
+DIVIDE(SUM(Sales[Sales fact]),SUM(Sales[Sales plan])))
+
+// 4.每個 Manager 的總銷售
+EVALUATE
+SUMX(VALUES(Sales[Manager]),Sales[Sales fact])
+
 
 EVALUATE
-IF.EAGER(Sales[Country]="USA","達成","失敗")
-SWITCH(
+SUMX(Sales,Sales[Sales fact])
+
+EVALUATE
+all(Sales)
